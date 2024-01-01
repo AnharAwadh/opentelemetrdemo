@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 
 
 @RestController
@@ -18,5 +19,15 @@ public class OrderController {
     public Order findById(@PathVariable Long id) {
         return this.orderRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid id: %d".formatted(id)));
+    }
+    @GetMapping("/all")
+    public List<Order> findAll() {
+
+        return this.orderRepository.findAll();
+    }
+    @GetMapping("/test")
+    public void test() throws InterruptedException {
+Thread.sleep(3000);
+
     }
 }
