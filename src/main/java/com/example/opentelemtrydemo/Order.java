@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "orders",schema = "opentelemetry")
 @Getter
 @NoArgsConstructor
 public class Order {

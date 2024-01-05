@@ -1,21 +1,14 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.1'
-    id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.springframework.boot' version '3.1.2'
+    id 'io.spring.dependency-management' version '1.1.2'
 }
 
-group = 'com.example'
+group = 'vn.cloud'
 version = '0.0.1-SNAPSHOT'
 
 java {
     sourceCompatibility = '17'
-}
-
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-    agent
 }
 
 repositories {
@@ -23,28 +16,36 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    agent "io.opentelemetry.javaagent:opentelemetry-javaagent:1.32.0"
     runtimeOnly 'org.postgresql:postgresql'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'io.micrometer:micrometer-registry-otlp'
+    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 
+    implementation 'io.micrometer:micrometer-tracing-bridge-otel'
+    implementation 'io.opentelemetry:opentelemetry-api:1.29.0'
+    implementation 'io.opentelemetry:opentelemetry-context:1.29.0'
+    implementation 'io.opentelemetry:opentelemetry-sdk:1.29.0'
+    implementation 'io.opentelemetry:opentelemetry-sdk-trace:1.29.0'
+    implementation 'io.opentelemetry:opentelemetry-sdk-metrics:1.29.0'
+    implementation 'io.opentelemetry:opentelemetry-sdk-common:1.29.0'
+    implementation 'io.opentelemetry:opentelemetry-sdk-extension-autoconfigure-spi:1.29.0'
+    implementation 'io.opentelemetry:opentelemetry-extension-trace-propagators:1.29.0'
+    implementation 'io.opentelemetry:opentelemetry-exporter-common:1.29.0'
+    implementation 'io.opentelemetry:opentelemetry-exporter-otlp:1.29.0'
+    implementation 'io.opentelemetry:opentelemetry-exporter-otlp-common:1.29.0'
+    implementation 'io.opentelemetry.instrumentation:opentelemetry-instrumentation-api-semconv:1.29.0-alpha'
 
+    implementation 'io.opentelemetry.instrumentation:opentelemetry-logback-appender-1.0:1.29.0-alpha'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
-}
-task copyAgent(type: Copy) {
-    from configurations.agent {
-        rename "opentelemetry-javaagent-.*\\.jar", "opentelemetry-javaagent.jar"
-    }
-    into layout.buildDirectory.dir("agent")
-}
-bootJar{
-    dependsOn copyAgent
-
-    archiveFileName = 'app.jar'
 }
