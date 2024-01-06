@@ -10,6 +10,10 @@ services:
       OTEL_EXPORTER_ZIPKIN_ENDPOINT: "http://zipkin:9411/api/v2/spans"
       OTEL_EXPORTER_PROMETHEUS_HOST: "0.0.0.0"
       OTEL_EXPORTER_PROMETHEUS_PORT: "9464"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://tempo:4317"
+      OTEL_EXPORTER_OTLP_INSECURE: true
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/opentelemetry"
+
     ports:
       - "8080:8080"
   prometheus:
@@ -59,4 +63,9 @@ services:
       POSTGRES_USER: username
       POSTGRES_PASSWORD: password
     ports:
-      - "5433:5433"
+      - "5432:5432"
+  tempo:
+    image: grafana/tempo:1.5.0
+    command: [ "--target=all", "--storage.trace.backend=local", "--storage.trace.local.path=/var/tempo", "--multitenancy.enabled=false", "--search.enabled=true" ]
+    ports:
+      - 8081:80
