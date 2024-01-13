@@ -30,6 +30,10 @@ dependencies {
     agent "io.opentelemetry.javaagent:opentelemetry-javaagent:1.32.0"
     runtimeOnly 'org.postgresql:postgresql'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    implementation 'io.opentelemetry:opentelemetry-api:1.29.0'
+
 
 
 }

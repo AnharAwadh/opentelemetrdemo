@@ -1,3 +1,4 @@
+
 global:
   scrape_interval: 15s
   scrape_timeout: 10s
@@ -12,4 +13,4 @@ scrape_configs:
     scheme: http
     static_configs:
       - targets:
-          - anhar-service:9464
+          - host.docker.internal:9464

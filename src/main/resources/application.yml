@@ -1,9 +1,12 @@
+
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5433/opentelemetry
+    url: jdbc:postgresql://localhost:5432/opentelemetry
     username: username
     password: password
+    hikari:
+      maximum-pool-size: 30
 
   sql:
     init:
@@ -18,6 +21,43 @@ spring:
       hibernate:
         format_sql: true
         default_schema: orders
+server:
+  tomcat:
+    mbeanregistry:
+      enabled: true
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  metrics:
+    distribution:
+      percentiles:
+        do.sleep.method.timed: 0.99, 0.95, 0.9, 0.7, 0.5
+        http.server.requests: 0.99, 0.95, 0.9, 0.7, 0.5
+      percentiles-histogram:
+        do.sleep.method.timed: true
+        http.server.requests: true
+      minimum-expected-value:
+        do.sleep.method.timed: 100ms
+        http.server.requests: 100ms
+      maximum-expected-value:
+        do.sleep.method.timed: 10s
+        http.server.requests: 10s
+      slo:
+        do.sleep.method.timed: 300ms,500ms,1s,2s
+        http.server.requests: 300ms,500ms,1s,2s
+    tags:
+      application: dev
 
 
+#    tags:
+#      department: ${SERVICE_DEPARTMENT:software}
+#      team: ${SERVICE_TEAM:greeting}
+#      service: ${spring.application.name}
+#      env: ${SERVICE_ENV:dev}
+#      region: ${SERVICE_REGION:europe-west1}
+#      instance.id: ${SERVICE_INSTANCE_ID:dasdasdsadasd}
+logging:
+  pattern:
+    console: "%-4r [%t] %5p %c{1} - %mdc - %m - tx.id=%X{transaction.id} \n"
 
