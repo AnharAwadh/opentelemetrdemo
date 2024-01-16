@@ -1,4 +1,4 @@
-package com.example.opentelemtrydemo;
+package com.example.opentelemtrydemo.services;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -10,7 +10,7 @@ spring:
 
   sql:
     init:
-      mode: always
+      mode: never
 
   jpa:
     show-sql: true
@@ -26,9 +26,6 @@ server:
     mbeanregistry:
       enabled: true
 management:
-  tracing:
-    sampling:
-      probability: 1.0
   metrics:
     distribution:
       percentiles:
@@ -57,7 +54,3 @@ management:
 #      env: ${SERVICE_ENV:dev}
 #      region: ${SERVICE_REGION:europe-west1}
 #      instance.id: ${SERVICE_INSTANCE_ID:dasdasdsadasd}
-logging:
-  pattern:
-    console: "%-4r [%t] %5p %c{1} - %mdc - %m - tx.id=%X{transaction.id} \n"
-

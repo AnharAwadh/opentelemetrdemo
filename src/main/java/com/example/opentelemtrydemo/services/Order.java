@@ -1,4 +1,4 @@
-package com.example.opentelemtrydemo;
+package com.example.opentelemtrydemo.services;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

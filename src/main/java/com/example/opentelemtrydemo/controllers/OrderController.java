@@ -1,5 +1,9 @@
-package com.example.opentelemtrydemo;
+package com.example.opentelemtrydemo.controllers;
 
+
+import com.example.opentelemtrydemo.services.Order;
+import com.example.opentelemtrydemo.services.OrderRepository;
+import com.example.opentelemtrydemo.services.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +20,7 @@ import java.util.List;
 @Log4j2
 public class OrderController {
     private final OrderRepository orderRepository;
-
+    private final OrderService orderService;
     @GetMapping("/{id}")
     public Order findById(@PathVariable Long id) {
        log.info("[findById] get order by id {}",id);
@@ -28,5 +32,12 @@ public class OrderController {
         log.info("[findAll]");
         log.info("another log");
         return this.orderRepository.findAll();
+    }
+
+    @GetMapping("test")
+    public void test() throws Exception {
+        this.orderService.testService();
+        this.orderService.demo();
+        log.info("test");
     }
 }
